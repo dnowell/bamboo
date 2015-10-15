@@ -35,6 +35,18 @@ defaults
 
 
 # Template Customization
+
+frontend http-in
+bind 0.0.0.0:8282
+acl ::nginx-container-test-aclrule path_beg -i /
+use_backend ::nginx-container-test-cluster if ::nginx-container-test-aclrule
+
+frontend http-in
+bind 0.0.0.0:8181
+acl ::nginx-jm-aclrule path_beg -i /
+use_backend ::nginx-jm-cluster if ::nginx-jm-aclrule
+
+
 frontend http-in
         bind 0.0.0.0:80
         {{ $services := .Services }}
